@@ -20,6 +20,14 @@ function* fetchTodos() {
     yield put({ type: FETCH_TODOS_FAILURE, error });
   }
 }
+function* addTodoSaga(action) {
+    try {
+      yield call(axios.post, API_URL, { title: action.title });
+      yield put({ type: FETCH_TODOS_REQUEST });
+    } catch (error) {
+      console.error("Error adding item", error);
+    }
+  }
 
 export function* todoSaga() {
   yield takeLatest(FETCH_TODOS_REQUEST, fetchTodos);
