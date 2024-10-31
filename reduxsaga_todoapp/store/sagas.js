@@ -28,6 +28,14 @@ function* addTodoSaga(action) {
       console.error("Error adding item", error);
     }
   }
+  function* updateTodoSaga(action) {
+    try {
+      yield call(axios.put, `${API_URL}/${action.id}`, { title: action.title });
+      yield put({ type: FETCH_TODOS_REQUEST });
+    } catch (error) {
+      console.error("Error updating item", error);
+    }
+  }
 
 export function* todoSaga() {
   yield takeLatest(FETCH_TODOS_REQUEST, fetchTodos);
