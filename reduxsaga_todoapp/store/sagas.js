@@ -36,6 +36,14 @@ function* addTodoSaga(action) {
       console.error("Error updating item", error);
     }
   }
+  function* deleteTodoSaga(action) {
+    try {
+      yield call(axios.delete, `${API_URL}/${action.id}`);
+      yield put({ type: FETCH_TODOS_REQUEST });
+    } catch (error) {
+      console.error("Error deleting item", error);
+    }
+  }
 
 export function* todoSaga() {
   yield takeLatest(FETCH_TODOS_REQUEST, fetchTodos);
